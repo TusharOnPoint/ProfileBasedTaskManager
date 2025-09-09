@@ -40,7 +40,7 @@ public class JwtUtils {
                 .compact();
     }
 
-    private String getUsernameFromToken(String token){
+    public String getUsernameFromToken(String token){
         return extractdClaims(token, Claims::getSubject);
     }
 
