@@ -39,7 +39,7 @@ public class Task {
     private String description;
 
     @NotNull
-    private Boolean completed;
+    private boolean completed;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
