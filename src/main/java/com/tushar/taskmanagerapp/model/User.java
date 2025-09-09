@@ -46,6 +46,6 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updateddAt;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 }
