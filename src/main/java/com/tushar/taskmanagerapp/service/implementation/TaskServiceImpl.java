@@ -135,5 +135,36 @@ public class TaskServiceImpl implements TaskService{
                         .data(tasks)
                         .build();
     }
+
+    @Override
+public Response<List<Task>> getAllTasks() {
+    List<Task> tasks = taskRepository.findAll();
+    return Response.<List<Task>>builder()
+            .statusCode(HttpStatus.OK.value())
+            .message("All tasks retrieved")
+            .data(tasks)
+            .build();
+}
+
+@Override
+@Transactional
+public Response<Task> createTaskForUser(Long userId, TaskRequest request) {
+    Task task = new Task();
+    task.setTitle(request.getTitle());
+    task.setDescription(request.getDescription());
+    task.setCompleted(false);
+    task.setPriority(request.getPriority());
+    task.setDueDate(request.getDueDate());
+    task.setCreatedAt(LocalDateTime.now());
+    task.setUpdatedAt(LocalDateTime.now());
+    task.setUserId(userId);
+
+    Task saved = taskRepository.save(task);
+    return Response.<Task>builder()
+            .statusCode(HttpStatus.CREATED.value())
+            .message("Task created for user " + userId)
+            .data(saved)
+            .build();
+}
     
 }

@@ -103,5 +103,33 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameOrEmail(usernameOrEmail);
     }
 
-    
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Response<?> changeUserRole(Long userId, Roles newRole) {
+        Optional<User> uOpt = userRepository.findById(userId);
+        if (uOpt.isEmpty()) {
+            return Response.<Void>builder().statusCode(HttpStatus.NOT_FOUND.value()).message("User not found").build();
+        }
+        User user = uOpt.get();
+        userRepository.updateRole(userId, newRole);
+        user.setRole(newRole);
+        return Response.builder().statusCode(HttpStatus.OK.value()).message("Role updated").data(user).build();
+    }
+
+    @Override
+    @Transactional
+    public Response<?> deleteUserById(Long userId) {
+        Optional<User> uOpt = userRepository.findById(userId);
+        if (uOpt.isEmpty()) {
+            return Response.<Void>builder().statusCode(HttpStatus.NOT_FOUND.value()).message("User not found").build();
+        }
+        userRepository.deleteById(userId);
+        return Response.builder().statusCode(HttpStatus.OK.value()).message("User deleted").build();
+    }
+
 }

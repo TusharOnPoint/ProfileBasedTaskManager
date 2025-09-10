@@ -40,6 +40,11 @@ public class UserRepository {
         return users.stream().findFirst();
     }
 
+    public Optional<User> findById(Long id) {
+        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", userMapper, id);
+        return users.stream().findFirst();
+    }
+
     public Optional<User> findByUsernameOrEmail(String usernameOrEmail) {
         return jdbcTemplate.query("SELECT * FROM users WHERE username=? OR email=?", userMapper,
                 usernameOrEmail, usernameOrEmail).stream().findFirst();
@@ -79,6 +84,21 @@ public class UserRepository {
     public void updatePassword(Long userId, String hashedPassword) {
         String sql = "UPDATE users SET password = ? WHERE id = ?";
         jdbcTemplate.update(sql, hashedPassword, userId);
+    }
+
+    public List<User> findAll() {
+        String sql = "SELECT id, created_at, fullname, username, email, password, role, updated_at, email_verified FROM users";
+        return jdbcTemplate.query(sql, userMapper);
+    }
+
+    public void updateRole(Long userId, Roles role) {
+        String sql = "UPDATE users SET role = ? WHERE id = ?";
+        jdbcTemplate.update(sql, role.name(), userId);
+    }
+
+    public void deleteById(Long userId) {
+        String sql = "DELETE FROM users WHERE id = ?";
+        jdbcTemplate.update(sql, userId);
     }
 
 }

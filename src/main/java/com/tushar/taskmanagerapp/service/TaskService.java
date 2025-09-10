@@ -14,4 +14,6 @@ public interface TaskService {
     Response<Void> deleteTask(Long id);
     Response<List<Task>> getMyTasksByCompletedStatus(boolean completed);
     Response<List<Task>> getMyTasksByPriority(String priority);
+    Response<List<Task>> getAllTasks();
+    Response<Task> createTaskForUser(Long userId, TaskRequest request);
 }
