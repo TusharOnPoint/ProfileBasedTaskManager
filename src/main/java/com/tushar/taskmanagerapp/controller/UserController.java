@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tushar.taskmanagerapp.dto.Response;
@@ -16,7 +15,6 @@ import com.tushar.taskmanagerapp.dto.UserRequest.PasswordResetRequest;
 import com.tushar.taskmanagerapp.dto.UserRequest.PerformEmailVerification;
 import com.tushar.taskmanagerapp.dto.UserRequest.PerformResetRequest;
 import com.tushar.taskmanagerapp.dto.UserRequest.RegisterRequest;
-import com.tushar.taskmanagerapp.model.EmailVerificationToken;
 import com.tushar.taskmanagerapp.model.PasswordResetToken;
 import com.tushar.taskmanagerapp.model.User;
 import com.tushar.taskmanagerapp.service.EmailService;
@@ -26,7 +24,6 @@ import com.tushar.taskmanagerapp.service.implementation.PasswordResetService;
 
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
