@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tushar.taskmanagerapp.dto.Response;
 import com.tushar.taskmanagerapp.dto.TaskRequest;
@@ -51,6 +52,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    @Transactional
     public Response<List<Task>> getAllMyTasks() {
         log.info("Inside create getAllMyTasks().");
         User user = userService.getCurrentLoggedInUser();
@@ -110,6 +112,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    @Transactional
     public Response<List<Task>> getMyTasksByCompletedStatus(boolean completed) {
         log.info("Inside create getMyTasksByCompletedStatus().");
         User user = userService.getCurrentLoggedInUser();
