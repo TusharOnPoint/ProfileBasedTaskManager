@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityFilterConfig {
+    
     private final AuthFilter authFilter;
 
     @Bean

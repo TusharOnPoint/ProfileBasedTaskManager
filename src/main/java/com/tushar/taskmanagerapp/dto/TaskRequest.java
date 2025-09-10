@@ -3,9 +3,6 @@ package com.tushar.taskmanagerapp.dto;
 import java.time.LocalDateTime;
 
 import com.tushar.taskmanagerapp.enums.Priority;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

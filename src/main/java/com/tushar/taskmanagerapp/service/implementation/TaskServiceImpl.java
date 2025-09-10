@@ -3,7 +3,6 @@ package com.tushar.taskmanagerapp.service.implementation;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +39,8 @@ public class TaskServiceImpl implements TaskService{
                                 .priority(taskRequest.getPriority())
                                 .dueDate(taskRequest.getDueDate())
                                 .createdAt(LocalDateTime.now())
-                                .updateddAt(LocalDateTime.now())
-                                .user(user)
+                                .updatedAt(LocalDateTime.now())
+                                .userId(user.getId())
                                 .build();
         Task savedTask = taskRepository.save(taskToSave);
         return Response.<Task>builder()
@@ -56,7 +55,7 @@ public class TaskServiceImpl implements TaskService{
     public Response<List<Task>> getAllMyTasks() {
         log.info("Inside create getAllMyTasks().");
         User user = userService.getCurrentLoggedInUser();
-        List<Task> tasks = taskRepository.findByUser(user, Sort.by(Sort.Direction.DESC, "id"));
+        List<Task> tasks = taskRepository.findByUser(user.getId());
         return Response.<List<Task>>builder()
                         .statusCode(HttpStatus.OK.value())
                         .message("Tasks retreived successfully.")
@@ -87,7 +86,7 @@ public class TaskServiceImpl implements TaskService{
         if(taskRequest.getCompleted()!=null) task.setCompleted(taskRequest.getCompleted());
         if(taskRequest.getPriority()!=null) task.setPriority(taskRequest.getPriority());
         if(taskRequest.getDueDate()!=null) task.setDueDate(taskRequest.getDueDate());
-        task.setUpdateddAt(LocalDateTime.now());
+        task.setUpdatedAt(LocalDateTime.now());
 
         Task updatedTask = taskRepository.save(task);
         return Response.<Task>builder()
@@ -104,7 +103,7 @@ public class TaskServiceImpl implements TaskService{
         if(!taskRepository.existsById(id))
             throw new NotFoundException("Task does not exist.");
         
-        taskRepository.deleteById(id);
+        taskRepository.delete(id);
         return Response.<Void>builder()
                         .statusCode(HttpStatus.OK.value())
                         .message("Task deleted successfully.")
@@ -116,7 +115,7 @@ public class TaskServiceImpl implements TaskService{
     public Response<List<Task>> getMyTasksByCompletedStatus(boolean completed) {
         log.info("Inside create getMyTasksByCompletedStatus().");
         User user = userService.getCurrentLoggedInUser();
-        List<Task> tasks = taskRepository.findByCompletedAndUser(completed, user);
+        List<Task> tasks = taskRepository.findByCompletedAndUser(completed, user.getId());
         return Response.<List<Task>>builder()
                         .statusCode(HttpStatus.OK.value())
                         .message("Tasks filtered by completed status for user.")
@@ -129,8 +128,7 @@ public class TaskServiceImpl implements TaskService{
         log.info("Inside create getMyTasksByPriority().");
         User user = userService.getCurrentLoggedInUser();
         Priority priorityEnum = Priority.valueOf(priority.toUpperCase());
-        List<Task> tasks = taskRepository.findByPriorityAndUser(priorityEnum, user, 
-                                        Sort.by(Sort.Direction.DESC, "id"));
+        List<Task> tasks = taskRepository.findByPriorityAndUser(priorityEnum, user.getId());
         return Response.<List<Task>>builder()
                         .statusCode(HttpStatus.OK.value())
                         .message("Tasks filtered by priority for user.")
