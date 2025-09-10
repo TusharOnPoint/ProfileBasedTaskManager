@@ -1,4 +1,4 @@
-package com.tushar.taskmanagerapp.exeptions;
+package com.tushar.taskmanagerapp.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,8 @@ import com.tushar.taskmanagerapp.dto.Response;
 @ControllerAdvice
 public class GlobalExeptionHandler {
 
-    @ExceptionHandler(NotFoundExeption.class)
-    public ResponseEntity<Response<?>> handleNotFoundExeption(Exception e){
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Response<?>> handleNotFoundException(Exception e){
         Response<?> response = Response.builder()
                                     .statusCode(HttpStatus.NOT_FOUND.value())
                                     .message(e.getMessage())
@@ -19,7 +19,7 @@ public class GlobalExeptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
     
-    @ExceptionHandler(BadRequestExeption.class)
+    @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Response<?>> handleBadRequestExeption(Exception e){
         Response<?> response = Response.builder()
                                     .statusCode(HttpStatus.BAD_REQUEST.value())

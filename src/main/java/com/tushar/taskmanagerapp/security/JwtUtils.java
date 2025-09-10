@@ -31,12 +31,12 @@ public class JwtUtils {
         this.key = new SecretKeySpec(keyByte, "HmacSHA256");
     }
 
-    private String generateToken(String username){
+    public String generateToken(String username){
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key)
+                .signWith(key, io.jsonwebtoken.SignatureAlgorithm.HS256)
                 .compact();
     }
 
