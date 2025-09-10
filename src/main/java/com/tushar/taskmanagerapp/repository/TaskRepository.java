@@ -12,5 +12,5 @@ import com.tushar.taskmanagerapp.model.User;
 public interface TaskRepository extends JpaRepository<Task, Long>{
     List<Task> findByUser(User user, Sort sort); 
     List<Task> findByCompletedAndUser(boolean completed, User user);
-    List<Task> findByPriorityAndUser(Priority priority, User user);
+    List<Task> findByPriorityAndUser(Priority priority, User user, Sort sort);
 }
