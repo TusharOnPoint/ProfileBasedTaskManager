@@ -35,8 +35,4 @@ public class User {
     private LocalDateTime updatedAt;
     @Getter @Setter
     private boolean emailVerified;
-
-    public boolean getEmailVerified(){
-        return emailVerified;
-    }
 }

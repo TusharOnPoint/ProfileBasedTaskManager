@@ -11,17 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tushar.taskmanagerapp.dto.Response;
-import com.tushar.taskmanagerapp.dto.UserRequest;
 import com.tushar.taskmanagerapp.dto.UserRequest.LoginRequest;
 import com.tushar.taskmanagerapp.dto.UserRequest.RegisterRequest;
 import com.tushar.taskmanagerapp.enums.Roles;
 import com.tushar.taskmanagerapp.exceptions.BadRequestException;
 import com.tushar.taskmanagerapp.exceptions.NotFoundException;
-import com.tushar.taskmanagerapp.model.EmailVerificationToken;
 import com.tushar.taskmanagerapp.model.User;
 import com.tushar.taskmanagerapp.repository.UserRepository;
 import com.tushar.taskmanagerapp.security.JwtUtils;
-import com.tushar.taskmanagerapp.service.EmailService;
 import com.tushar.taskmanagerapp.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -73,7 +70,7 @@ public class UserServiceImpl implements UserService {
         log.info("Inside login()");
         User user = userRepository.findByUsernameOrEmail(userRequest.getUsernameOrEmail())
                 .orElseThrow(() -> new NotFoundException("User not found."));
-        if (!user.getEmailVerified())
+        if (!user.isEmailVerified())
             throw new BadRequestException("Your email is not verified. Please verify your email to login.");
         if (!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
             throw new BadRequestException("Invalid password.");

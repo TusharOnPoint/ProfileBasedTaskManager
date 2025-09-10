@@ -36,7 +36,7 @@ public class JwtUtils {
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key, io.jsonwebtoken.SignatureAlgorithm.HS256)
+                .signWith(key, Jwts.SIG.HS256)
                 .compact();
     }
 
